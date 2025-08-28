@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Notifikasi Web</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="notifButton">Tampilkan Notifikasi</button>
+
+    <script>
+        const notifButton = document.getElementById('notifButton');
+
+        notifButton.addEventListener('click', () => {
+            // Periksa apakah browser mendukung Notifikasi API
+            if (!('Notification' in window)) {
+                alert('Browser Anda tidak mendukung Notifikasi API.');
+                return;
+            }
+
+            // Meminta izin dari pengguna
+            Notification.requestPermission().then(permission => {
+                // Jika izin diberikan, tampilkan notifikasi
+                if (permission === 'granted') {
+                    new Notification('Notifikasi dari Website!', {
+                        body: 'Ini adalah pesan notifikasi yang keren.',
+                        icon: 'https://cdn-icons-png.flaticon.com/512/3670/3670150.png',
+                        // Opsi lain, misalnya suara
+                        silent: false
+                    });
+                } else if (permission === 'denied') {
+                    console.warn('Pengguna menolak izin notifikasi.');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
